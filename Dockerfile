@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 RUN apt-get update
-RUN apt-get -yq install unzip curl less groff
+RUN apt-get -yq install unzip curl less groff jq
 
 ENV KUBECTL_VERSION='1.19.6/2021-01-05'
 ENV AWSCLI_VERSION=2.1.30
