@@ -4,6 +4,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -yq install unzip c
 ENV KUBECTL_VERSION='1.19.6/2021-01-05'
 ENV AWSCLI_VERSION=2.1.30
 ENV EKSCTL_VERSION=0.40.0
+ENV HELM_VERSION=v3.5.3
 
 WORKDIR /root
 
@@ -19,6 +20,12 @@ RUN aws --version
 RUN curl -sSfL "https://github.com/weaveworks/eksctl/releases/download/${EKSCTL_VERSION}/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp && mv /tmp/eksctl /usr/local/bin
 RUN eksctl version
 
+RUN curl -sSfL "https://github.com/helm/helm/releases/download/${HELM_VERSION}/helm-${HELM_VERSION}-linux-amd64.tar.gz.sha256.asc"
+RUN curl -sSfL "https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz" -O
+RUN openssl sha1 -sha256 helm-${HELM_VERSION}-linux-amd64.tar.gz && tar xf helm-${HELM_VERSION}-linux-amd64.tar.gz -C /tmp && mv /tmp/linux-amd64/helm /usr/local/bin
+RUN helm version
+
 RUN aws --version
 RUN kubectl version --short --client
 RUN eksctl version
+RUN helm version
